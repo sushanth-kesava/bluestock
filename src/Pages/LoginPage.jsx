@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../Styles/LoginPage.css";
 import "../Pages/ForgotPassword.jsx";
-import goldImg from "/Users/sushanthkesava/Downloads/BlueStock/src/assets/stock/ICONS/logo-removebg-preview.png";
-
+import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png";
 const SocialButton = ({ provider, onClick }) => (
   <button
     className={`${provider}-btn social-btn`}
