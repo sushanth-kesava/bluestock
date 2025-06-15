@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import "../Styles/LoginPage.css";
 import "../Pages/ForgotPassword.jsx";
 import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+
 const SocialButton = ({ provider, onClick }) => (
   <button
     className={`${provider}-btn social-btn`}
@@ -49,6 +51,16 @@ const LoginPage = ({ onLogin }) => {
     } else {
       setError("Invalid email or password.");
     }
+  };
+
+  const handleGoogleSuccess = (credentialResponse) => {
+    // You can send credentialResponse.credential to your backend for verification
+    setError("");
+    onLogin && onLogin();
+    navigate("/dashboard");
+  };
+  const handleGoogleError = () => {
+    setError("Google login failed. Please try again.");
   };
 
   return (
@@ -100,15 +112,26 @@ const LoginPage = ({ onLogin }) => {
         </form>
         <ForgotPassword />
         <Divider />
-        <div className="form-top-buttons">
-          <SocialButton
-            provider="google"
-            onClick={() => alert("Google login coming soon!")}
-          />
-          <SocialButton
-            provider="facebook"
-            onClick={() => alert("Facebook login coming soon!")}
-          />
+        <div
+          className="form-top-buttons"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "1rem",
+          }}
+        >
+          <GoogleOAuthProvider clientId="1039809654746-2lk87bim7k830h12u60ceu032cbpc4ot.apps.googleusercontent.com">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              width="100%"
+              shape="pill"
+              text="signin_with"
+              theme="filled_black"
+              logo_alignment="center"
+            />
+          </GoogleOAuthProvider>
         </div>
         <label className="remember-me">
           <input

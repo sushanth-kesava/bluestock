@@ -1,0 +1,2 @@
+BlueStock filter=lfs diff=lfs merge=lfs -text
+index.html filter=lfs diff=lfs merge=lfs -text
