@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/SignupPage.css";
-import goldImg from "/Users/sushanthkesava/Downloads/BlueStock/src/assets/stock/ICONS/logo-removebg-preview.png"; // Adjust the path as necessary
+import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png"; // Adjust the path as necessary
 
 // SignupPage component handles user registration with floating label inputs and modern styling
 const SignupPage = ({ onSignup }) => {
