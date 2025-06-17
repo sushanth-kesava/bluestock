@@ -1,20 +1,37 @@
 import React, { useState } from "react";
 import "../Styles/Dashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  FaHome,
-  FaChartLine,
-  FaUserCircle,
-  FaCog,
-  FaSignOutAlt,
-  FaBars,
-} from "react-icons/fa";
+  faHome,
+  faChartLine,
+  faUserCircle,
+  faCog,
+  faSignOutAlt,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 import logo from "/Users/sushanthkesava/Downloads/BlueStock/src/assets/stock/bluestock-assets/other item uploading soon/logo.png";
 
 const navItems = [
-  { label: "Home", icon: <FaHome title="Home" />, link: "#" },
-  { label: "Market", icon: <FaChartLine title="Market" />, link: "#" },
-  { label: "Account", icon: <FaUserCircle title="Account" />, link: "#" },
-  { label: "Settings", icon: <FaCog title="Settings" />, link: "#" },
+  {
+    label: "Home",
+    icon: <FontAwesomeIcon icon={faHome} title="Home" />,
+    link: "#",
+  },
+  {
+    label: "Market",
+    icon: <FontAwesomeIcon icon={faChartLine} title="Market" />,
+    link: "#",
+  },
+  {
+    label: "Account",
+    icon: <FontAwesomeIcon icon={faUserCircle} title="Account" />,
+    link: "#",
+  },
+  {
+    label: "Settings",
+    icon: <FontAwesomeIcon icon={faCog} title="Settings" />,
+    link: "#",
+  },
 ];
 
 const SideNav = ({ onLogout }) => {
@@ -30,7 +47,7 @@ const SideNav = ({ onLogout }) => {
           onClick={() => setCollapsed((c) => !c)}
           title={collapsed ? "Expand" : "Collapse"}
         >
-          <FaBars size={18} />
+          <FontAwesomeIcon icon={faBars} size="lg" />
         </button>
       </div>
       <ul>
@@ -51,7 +68,7 @@ const SideNav = ({ onLogout }) => {
       <div className="side-divider" />
       <div className="logout-section">
         <button className="logout-btn" onClick={onLogout} title="Logout">
-          <FaSignOutAlt size={22} />
+          <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
           {!collapsed && <span className="nav-label">Logout</span>}
         </button>
       </div>

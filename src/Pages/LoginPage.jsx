@@ -4,6 +4,14 @@ import "../Styles/LoginPage.css";
 import "../Pages/ForgotPassword.jsx";
 import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope,
+  faLock,
+  faCheckCircle,
+  faExclamationCircle,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 const SocialButton = ({ provider, onClick }) => (
   <button
@@ -86,27 +94,40 @@ const LoginPage = ({ onLogin }) => {
         <div className="subtitle">Welcome to BlueStock – Secure Login</div>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
+            <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
             <input
               type="email"
               placeholder=" "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              style={{ paddingLeft: 32 }}
             />
             <label>Email Address</label>
           </div>
           <div className="input-group">
+            <FontAwesomeIcon icon={faLock} className="input-icon" />
             <input
               type="password"
               placeholder=" "
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              style={{ paddingLeft: 32 }}
             />
             <label>Password</label>
           </div>
-          {error && <div className="login-error">{error}</div>}
+          {error && (
+            <div className="login-error">
+              <FontAwesomeIcon
+                icon={faExclamationCircle}
+                style={{ marginRight: 6 }}
+              />
+              {error}
+            </div>
+          )}
           <button type="submit" className="create-btn">
+            <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: 6 }} />
             Login
           </button>
         </form>

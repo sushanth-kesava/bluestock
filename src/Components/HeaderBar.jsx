@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Dashboard.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderBar = () => {
   const [theme, setTheme] = useState(() => {
@@ -71,17 +73,31 @@ const HeaderBar = () => {
           <div className="account-balance">Balance: {accountInfo.balance}</div>
         </div>
       </div>
-      <input
-        type="text"
-        className="header-search"
-        placeholder="Search stocks, news, or symbols..."
-      />
+      <div style={{ position: "relative", width: "260px" }}>
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="header-search-icon"
+          style={{
+            position: "absolute",
+            left: 12,
+            top: 13,
+            color: "#aaa",
+            fontSize: 18,
+          }}
+        />
+        <input
+          type="text"
+          className="header-search"
+          placeholder="Search stocks, news, or symbols..."
+          style={{ paddingLeft: 36 }}
+        />
+      </div>
       <button
         className="theme-toggler"
         onClick={toggleTheme}
         aria-label="Toggle dark/light mode"
       >
-        {theme === "dark" ? "🌙" : "☀️"}
+        <FontAwesomeIcon icon={theme === "dark" ? faMoon : faSun} />
       </button>
     </div>
   );

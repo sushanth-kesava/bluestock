@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import "../Styles/LoginPage.css";
 import goldImg from "/Users/sushanthkesava/Downloads/BlueStock/src/assets/stock/ICONS/logo-removebg-preview.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEnvelope,
+  faCheckCircle,
+  faExclamationCircle,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -41,6 +48,7 @@ const ForgotPassword = () => {
         <div className="subtitle">Reset your password</div>
         {submitted ? (
           <div className="login-success" style={{ textAlign: "center" }}>
+            <FontAwesomeIcon icon={faCheckCircle} style={{ marginRight: 6 }} />
             If an account exists for <b>{email}</b>, a reset link has been sent.
             <br />
             Please check your inbox.
@@ -48,23 +56,38 @@ const ForgotPassword = () => {
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="input-group">
+              <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
               <input
                 type="email"
                 placeholder=" "
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                style={{ paddingLeft: 46 }}
               />
               <label>Email Address</label>
             </div>
-            {error && <div className="login-error">{error}</div>}
+            {error && (
+              <div className="login-error">
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  style={{ marginRight: 6 }}
+                />
+                {error}
+              </div>
+            )}
             <button type="submit" className="create-btn">
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                style={{ marginRight: 6 }}
+              />
               Send Reset Link
             </button>
           </form>
         )}
         <div className="switch-auth" style={{ marginTop: 18 }}>
           <a href="/login" className="switch-btn">
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 6 }} />
             Back to Login
           </a>
         </div>

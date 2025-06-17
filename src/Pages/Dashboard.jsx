@@ -5,6 +5,8 @@ import SideNav from "../Components/SideNav";
 import LeftPanel from "../Components/LeftPanel";
 import RightPanel from "../Components/RightPanel";
 import Footer from "../Components/Footer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const API_KEY = "demo"; // Replace with your Alpha Vantage API key for production
 const SYMBOL = "MSFT";
@@ -62,7 +64,14 @@ const Dashboard = ({ onLogout }) => {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <div className="dashboard">Loading stock data...</div>;
+  if (loading)
+    return (
+      <div className="dashboard">
+        <span className="loading-stock-icon-fa">
+          <FontAwesomeIcon icon={faSpinner} spin size="2x" color="#ff9800" />
+        </span>
+      </div>
+    );
   if (error) return <div className="dashboard">{error}</div>;
   if (!stockData) return null;
 

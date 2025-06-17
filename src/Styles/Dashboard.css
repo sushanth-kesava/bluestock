@@ -905,3 +905,60 @@ input[type="password"]:focus {
     color: inherit;
   }
 }
+
+/* --- Loading Animation Styles --- */
+.loading-animate {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: var(--accent, #ff9800);
+  letter-spacing: 0.04em;
+  animation: loading-dots 1.2s infinite linear;
+}
+
+@keyframes loading-dots {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  60% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading-stock-icon {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 60px auto 0 auto;
+  animation: loading-spin 1.2s linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-stock-icon-fa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 60px auto 0 auto;
+  font-size: 2.5rem;
+  color: var(--accent, #ff9800);
+}

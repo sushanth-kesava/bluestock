@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/SignupPage.css";
-import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png"; // Adjust the path as necessary
+import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUser,
+  faEnvelope,
+  faLock,
+  faIdCard,
+  faCheckCircle,
+  faExclamationCircle,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 // SignupPage component handles user registration with floating label inputs and modern styling
 const SignupPage = ({ onSignup }) => {
@@ -58,69 +68,85 @@ const SignupPage = ({ onSignup }) => {
       <div className="login-panel signup-panel">
         <div className="subtitle">Create your BlueStock account</div>
         <form onSubmit={handleSubmit}>
-          {/* Name input with floating label */}
           <div className="input-group">
+            <FontAwesomeIcon icon={faUser} className="input-icon" />
             <input
               type="text"
               placeholder=" "
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              style={{ minWidth: 0 }}
+              style={{ minWidth: 0, paddingLeft: 32 }}
             />
             <label>Full Name</label>
           </div>
-          {/* Email input with floating label */}
           <div className="input-group">
+            <FontAwesomeIcon icon={faEnvelope} className="input-icon" />
             <input
               type="email"
               placeholder=" "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              style={{ minWidth: 0 }}
+              style={{ minWidth: 0, paddingLeft: 32 }}
             />
             <label>Email Address</label>
           </div>
-          {/* Workspace input with floating label */}
           <div className="input-group">
+            <FontAwesomeIcon icon={faIdCard} className="input-icon" />
             <input
               type="password"
               placeholder=" "
               value={workspace}
               onChange={(e) => setWorkspace(e.target.value)}
               required
-              style={{ minWidth: 0 }}
+              style={{ minWidth: 0, paddingLeft: 32 }}
             />
             <label>Account Number</label>
           </div>
-          {/* Password input with floating label */}
           <div className="input-group">
+            <FontAwesomeIcon icon={faLock} className="input-icon" />
             <input
               type="password"
               placeholder=" "
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              style={{ minWidth: 0 }}
+              style={{ minWidth: 0, paddingLeft: 32 }}
             />
             <label>Password</label>
           </div>
-          {/* Confirm password input with floating label */}
           <div className="input-group">
+            <FontAwesomeIcon icon={faLock} className="input-icon" />
             <input
               type="password"
               placeholder=" "
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              style={{ minWidth: 0 }}
+              style={{ minWidth: 0, paddingLeft: 32 }}
             />
             <label>Confirm Password</label>
           </div>
           {/* Error and success messages */}
-          {error && <div className="login-error">{error}</div>}
-          {success && <div className="login-success">{success}</div>}
+          {error && (
+            <div className="login-error">
+              <FontAwesomeIcon
+                icon={faExclamationCircle}
+                style={{ marginRight: 6 }}
+              />
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="login-success">
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                style={{ marginRight: 6 }}
+              />
+              {success}
+            </div>
+          )}
           <button
             type="submit"
             className="create-btn"
@@ -129,6 +155,7 @@ const SignupPage = ({ onSignup }) => {
               padding: "0.7em 2em",
             }}
           >
+            <FontAwesomeIcon icon={faUserPlus} style={{ marginRight: 6 }} />
             Sign Up
           </button>
         </form>
