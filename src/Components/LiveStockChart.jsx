@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -16,6 +18,7 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -39,7 +42,10 @@ const LiveStockChart = ({ symbol = "MSFT" }) => {
         const data = await response.json();
         if (data["Time Series (5min)"]) {
           const timeSeries = data["Time Series (5min)"];
-          const labels = Object.keys(timeSeries).reverse();
+          const allLabels = Object.keys(timeSeries).reverse();
+          // Sample every 5th point for a cleaner x-axis
+          const step = 5;
+          const labels = allLabels.filter((_, idx) => idx % step === 0);
           const prices = labels.map((time) =>
             parseFloat(timeSeries[time]["4. close"])
           );
@@ -47,11 +53,14 @@ const LiveStockChart = ({ symbol = "MSFT" }) => {
             labels,
             datasets: [
               {
+                type: "line",
                 label: `${symbol} Price`,
                 data: prices,
                 borderColor: "rgba(75,192,192,1)",
                 backgroundColor: "rgba(75,192,192,0.2)",
-                tension: 0.1,
+                tension: 0.9, // Increase tension for smoother curve
+                cubicInterpolationMode: "monotone", // Smoother interpolation
+                yAxisID: 'y',
               },
             ],
           });
@@ -60,7 +69,7 @@ const LiveStockChart = ({ symbol = "MSFT" }) => {
             "Failed to fetch data. API limit reached or invalid response."
           );
         }
-      } catch (err) {
+      } catch {
         setError("Error fetching data.");
       }
       setLoading(false);
@@ -86,7 +95,25 @@ const LiveStockChart = ({ symbol = "MSFT" }) => {
       <h3>Live {symbol} Stock Price (5min)</h3>
       <Line
         data={chartData}
-        options={{ responsive: true, plugins: { legend: { display: true } } }}
+        options={{
+          responsive: true,
+          plugins: { legend: { display: true } },
+          elements: {
+            line: {
+              tension: 0.5, // Smoother curve
+              cubicInterpolationMode: "monotone",
+            },
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              title: { display: true, text: 'Price' },
+              grid: { drawOnChartArea: true },
+            },
+          },
+        }}
       />
     </div>
   );

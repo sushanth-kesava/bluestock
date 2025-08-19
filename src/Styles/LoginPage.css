@@ -135,7 +135,7 @@
   top: 50%;
   transform: translateY(-50%);
   color: #888;
-  font-size: 0.88rem;
+  font-size: 0.78rem !important;
   pointer-events: none;
   transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
@@ -147,10 +147,11 @@
 .login-panel .input-group input:not(:placeholder-shown) + label {
   top: -10px;
   left: 46px;
-  font-size: 0.92rem;
+  font-size: 0.82rem !important;
   color: var(--accent, #b2ff59);
   background: rgba(35, 36, 58, 0.92);
-  padding: 0 4px;
+  padding: 0 2px !important;
+  max-width: 80%;
   text-align: left;
 }
 

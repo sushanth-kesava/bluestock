@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../Styles/Dashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useSearch } from "../Context/SearchContext";
 
 const HeaderBar = () => {
   const [theme, setTheme] = useState(() => {
@@ -13,10 +14,14 @@ const HeaderBar = () => {
 
   const [accountInfo, setAccountInfo] = useState({
     name: "",
+    email: "",
     accountNumber: "",
     balance: "",
     avatar: "",
+    isGoogle: false,
   });
+
+  const { search, setSearch } = useSearch();
 
   useEffect(() => {
     document.body.setAttribute("data-theme", theme);
@@ -24,36 +29,80 @@ const HeaderBar = () => {
   }, [theme]);
 
   useEffect(() => {
-    // Get user info from localStorage (set during signup/login)
+    // Prefer Google OAuth info if available
+    const googleName = localStorage.getItem("googleName");
+    const googleEmail = localStorage.getItem("googleEmail");
+    const googleAvatar = localStorage.getItem("googleAvatar");
+    if (googleName && googleEmail && googleAvatar) {
+      setAccountInfo({
+        name: googleName,
+        email: googleEmail,
+        accountNumber: "Google Account",
+        balance: localStorage.getItem("signupBalance") || "$122,912.50",
+        avatar: googleAvatar,
+        isGoogle: true,
+      });
+      return;
+    }
+    // Fallback to regular signup/login info
     const name = localStorage.getItem("signupName") || "User";
+    const email = localStorage.getItem("signupEmail") || "";
     const accountNumberRaw =
       localStorage.getItem("signupWorkspace") || "00000000";
     const accountNumber =
       accountNumberRaw.length >= 8
         ? `${accountNumberRaw.slice(0, 2)}****${accountNumberRaw.slice(-2)}`
         : `****${accountNumberRaw.slice(-4)}`;
-    const balance = "$122,912.50"; // You can make this dynamic if needed
+    const balance = localStorage.getItem("signupBalance") || "$122,912.50";
     const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(
       name
     )}&background=1a237e&color=fff`;
-    setAccountInfo({ name, accountNumber, balance, avatar });
+    setAccountInfo({
+      name,
+      email,
+      accountNumber,
+      balance,
+      avatar,
+      isGoogle: false,
+    });
   }, []);
 
-  // Optionally, update info if localStorage changes (e.g., on login)
   useEffect(() => {
     const onStorage = () => {
+      const googleName = localStorage.getItem("googleName");
+      const googleEmail = localStorage.getItem("googleEmail");
+      const googleAvatar = localStorage.getItem("googleAvatar");
+      if (googleName && googleEmail && googleAvatar) {
+        setAccountInfo({
+          name: googleName,
+          email: googleEmail,
+          accountNumber: "Google Account",
+          balance: localStorage.getItem("signupBalance") || "$122,912.50",
+          avatar: googleAvatar,
+          isGoogle: true,
+        });
+        return;
+      }
       const name = localStorage.getItem("signupName") || "User";
+      const email = localStorage.getItem("signupEmail") || "";
       const accountNumberRaw =
         localStorage.getItem("signupWorkspace") || "00000000";
       const accountNumber =
         accountNumberRaw.length >= 8
           ? `${accountNumberRaw.slice(0, 2)}****${accountNumberRaw.slice(-2)}`
           : `****${accountNumberRaw.slice(-4)}`;
-      const balance = "$122,912.50";
+      const balance = localStorage.getItem("signupBalance") || "$122,912.50";
       const avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(
         name
       )}&background=1a237e&color=fff`;
-      setAccountInfo({ name, accountNumber, balance, avatar });
+      setAccountInfo({
+        name,
+        email,
+        accountNumber,
+        balance,
+        avatar,
+        isGoogle: false,
+      });
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
@@ -69,6 +118,14 @@ const HeaderBar = () => {
         <img src={accountInfo.avatar} alt="avatar" className="account-avatar" />
         <div>
           <div className="account-name">{accountInfo.name}</div>
+          {accountInfo.email && (
+            <div
+              className="account-email"
+              style={{ fontSize: 14, color: "#b0bec5" }}
+            >
+              {accountInfo.email}
+            </div>
+          )}
           <div className="account-number">Acc: {accountInfo.accountNumber}</div>
           <div className="account-balance">Balance: {accountInfo.balance}</div>
         </div>
@@ -79,10 +136,10 @@ const HeaderBar = () => {
           className="header-search-icon"
           style={{
             position: "absolute",
-            left: 12,
-            top: 13,
+            left: 11,
+            top: 20,
             color: "#aaa",
-            fontSize: 18,
+            fontSize: 17,
           }}
         />
         <input
@@ -90,6 +147,8 @@ const HeaderBar = () => {
           className="header-search"
           placeholder="Search stocks, news, or symbols..."
           style={{ paddingLeft: 36 }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       <button

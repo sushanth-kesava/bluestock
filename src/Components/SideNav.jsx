@@ -8,8 +8,9 @@ import {
   faCog,
   faSignOutAlt,
   faBars,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import logo from "/Users/sushanthkesava/Downloads/BlueStock/src/assets/stock/bluestock-assets/other item uploading soon/logo.png";
+import logo from "../assets/stock/bluestock-assets/other item uploading soon/logo.png";
 
 const navItems = [
   {
@@ -31,6 +32,11 @@ const navItems = [
     label: "Settings",
     icon: <FontAwesomeIcon icon={faCog} title="Settings" />,
     link: "#",
+  },
+  {
+    label: "Upcoming IPO",
+    icon: <FontAwesomeIcon icon={faCalendarAlt} title="Upcoming IPO" />,
+    link: "/upcoming-ipo",
   },
 ];
 
@@ -60,7 +66,7 @@ const SideNav = ({ onLogout }) => {
               data-tooltip={item.label}
             >
               <span className="nav-icon">{item.icon}</span>
-              {!collapsed && <span className="nav-label">{item.label}</span>}
+              {!collapsed && null}
             </a>
           </li>
         ))}

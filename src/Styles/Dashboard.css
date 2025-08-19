@@ -28,7 +28,8 @@ body[data-theme="light"] {
   --input-border: #1976d2;
   --button-bg: linear-gradient(90deg, #1976d2 60%, #b2ff59 100%);
   --button-hover: #e3e7ef;
-  --green: #1976d2;
+  --green: #2563eb; /* Strong blue for green in light mode */
+  --light-green: #60a5fa; /* Light blue for light green in light mode */
   --red: #e53935;
   --buy-btn-text: #fff;
   --buy-btn-hover: #1565c0;
@@ -50,6 +51,7 @@ body[data-theme="dark"] {
   --button-bg: linear-gradient(90deg, #00bfa5 60%, #1a237e 100%);
   --button-hover: linear-gradient(90deg, #009e8f 60%, #3949ab 100%);
   --green: #00ff99;
+  --light-green: #b2ff59;
   --red: #ff4d4d;
 }
 
@@ -143,7 +145,7 @@ body[data-theme="dark"] {
 
 .account-balance {
   font-size: 16px;
-  color: #b2ff59;
+  color: var(--light-green, #60a5fa);
   font-weight: 500;
 }
 
@@ -172,7 +174,11 @@ body[data-theme="dark"] {
 }
 
 .green {
-  color: var(--green, #00ff99);
+  color: var(--green, #2563eb);
+}
+
+.light-green {
+  color: var(--light-green, #60a5fa);
 }
 
 .red {
@@ -232,7 +238,7 @@ body[data-theme="dark"] {
   display: block;
   margin: 12px 0 4px;
   font-size: 15px;
-  color: #b2ff59;
+  color: var(--light-green, blue);
   font-weight: 500;
 }
 
@@ -491,7 +497,7 @@ body[data-theme="dark"] {
 
 /* Collapsed nav label hide */
 .side-nav.collapsed .nav-label {
-  display: none;
+  display: block;
 }
 
 /* --- Auth Page Styles --- */
@@ -657,37 +663,63 @@ input[type="password"]:focus {
   box-shadow: 0 4px 16px 0 rgba(26, 35, 126, 0.15);
 }
 
-.header-search {
-  width: 260px;
-  max-width: 40vw;
-  min-width: 120px;
-  padding: 8px 14px;
+.header-search-wrapper {
+  position: relative;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  background: #fff;
   border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(30, 58, 138, 0.08);
   border: 1.5px solid var(--input-border, #1976d2);
-  background: var(--input-bg, #f4f6fa);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.header-search {
+  width: 100%;
+  border: none;
+  background: transparent;
   color: var(--text-main, #222);
-  font-size: 1rem;
-  transition: border 0.2s, background 0.2s, width 0.2s;
-  margin-left: 24px;
-  margin-right: 24px;
+  font-size: 1.05rem;
+  border-radius: 2px;
+  outline: none;
+  transition: background 0.2s, color 0.2s;
+  box-sizing: border-box;
 }
 
 .header-search:focus {
-  border: 2px solid var(--accent, #1976d2);
-  outline: none;
+  background: #f0f6ff;
+  color: #1976d2;
+}
+
+.header-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b0b8c9;
+  font-size: 20px;
+  pointer-events: none;
+  z-index: 2;
+  transition: color 0.2s;
+}
+
+.header-search:focus + .header-search-icon,
+.header-search-icon:focus {
+  color: #1976d2;
 }
 
 @media (max-width: 900px) {
+  .header-search-wrapper {
+    width: 180px;
+    min-width: 0;
+  }
   .header-search {
-    width: 140px;
-    max-width: 60vw;
-    font-size: 0.95rem;
-    margin-left: 0;
-    margin-right: 0;
+    font-size: 0.97rem;
+    padding-left: 36px;
   }
 }
 
-/* --- Responsive Enhancements --- */
 @media (max-width: 900px) {
   .dashboard {
     flex-direction: column;
@@ -961,4 +993,116 @@ input[type="password"]:focus {
   margin: 60px auto 0 auto;
   font-size: 2.5rem;
   color: var(--accent, #ff9800);
+}
+
+.nav-label {
+  font-size: 10pt !important;
+}
+
+.side-nav .nav-link.active .nav-label {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.app-header {
+  width: 100%;
+  background: #fff;
+  border-bottom: 1.5px solid #e5e7eb;
+  box-shadow: 0 2px 8px 0 rgba(30, 58, 138, 0.04);
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.app-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.app-header-logo {
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
+}
+.app-header-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #2563eb;
+  letter-spacing: 0.5px;
+}
+
+/* --- ENHANCEMENTS FOR MODERN DASHBOARD EXPERIENCE --- */
+
+/* Add card hover effect for dashboard widgets */
+.dashboard-card, .chart-placeholder {
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(25, 118, 210, 0.08);
+}
+.dashboard-card:hover, .chart-placeholder:hover {
+  box-shadow: 0 8px 32px 0 rgba(25, 118, 210, 0.18);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Add animated gradient border for active panels */
+.active-panel {
+  border: 2.5px solid;
+  border-image: linear-gradient(90deg, #00bfa5, #ff9800, #1a237e) 1;
+  animation: borderMove 2s linear infinite;
+}
+@keyframes borderMove {
+  0% { border-image-source: linear-gradient(90deg, #00bfa5, #ff9800, #1a237e); }
+  100% { border-image-source: linear-gradient(270deg, #00bfa5, #ff9800, #1a237e); }
+}
+
+/* Add floating action button for quick actions */
+.fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 60px;
+  height: 60px;
+  background: var(--button-bg, #00bfa5);
+  color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 4px 24px 0 rgba(25, 118, 210, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 200;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.fab:hover {
+  background: var(--button-hover, #009e8f);
+  box-shadow: 0 8px 32px 0 rgba(25, 118, 210, 0.28);
+}
+
+/* Add notification badge for alerts */
+.notification-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: var(--red, #ff4d4d);
+  color: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0 2px 8px 0 rgba(255,77,77,0.18);
+}
+
+/* Add smooth fade-in for dashboard sections */
+.fade-in {
+  animation: fadeIn 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
 }

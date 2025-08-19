@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../Styles/LoginPage.css";
-import goldImg from "/Users/sushanthkesava/Downloads/BlueStock/src/assets/stock/ICONS/logo-removebg-preview.png";
+import goldImg from "../assets/stock/ICONS/logo-removebg-preview.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,

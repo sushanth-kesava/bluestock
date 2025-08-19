@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
   faLock,
-  faCheckCircle,
   faExclamationCircle,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -62,7 +61,33 @@ const LoginPage = ({ onLogin }) => {
   };
 
   const handleGoogleSuccess = (credentialResponse) => {
-    // You can send credentialResponse.credential to your backend for verification
+    // Parse Google credential and store user info in localStorage
+    if (credentialResponse && credentialResponse.credential) {
+      const decodeJwt = (token) => {
+        try {
+          const base64Url = token.split(".")[1];
+          const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split("")
+              .map(function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+          return JSON.parse(jsonPayload);
+        } catch (e) {
+          return null;
+        }
+      };
+      const profile = decodeJwt(credentialResponse.credential);
+      console.log("Google profile object:", profile); // Debug log
+      if (profile) {
+        localStorage.setItem("googleName", profile.name || "Google User");
+        localStorage.setItem("googleEmail", profile.email || "");
+        localStorage.setItem("googleAvatar", profile.picture || "");
+      }
+    }
     setError("");
     onLogin && onLogin();
     navigate("/dashboard");
