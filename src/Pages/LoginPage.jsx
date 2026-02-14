@@ -76,7 +76,7 @@ const LoginPage = ({ onLogin }) => {
               .join("")
           );
           return JSON.parse(jsonPayload);
-        } catch (e) {
+        } catch {
           return null;
         }
       };
@@ -167,7 +167,7 @@ const LoginPage = ({ onLogin }) => {
             gap: "1rem",
           }}
         >
-          <GoogleOAuthProvider clientId="1039809654746-2lk87bim7k830h12u60ceu032cbpc4ot.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId="377081023110-7ocf5la0k5ru0comgqmapjj9musp91jj.apps.googleusercontent.com">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={handleGoogleError}

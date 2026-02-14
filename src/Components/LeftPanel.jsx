@@ -23,7 +23,7 @@ const LeftPanel = ({ stockData }) => {
         <p>Close: ₹{stockData.close?.toFixed(2)}</p>
         <p>Volume: {stockData.volume?.toLocaleString()}</p>
       </div>
-      <LiveStockChart symbol={stockData.symbol} />
+      <LiveStockChart symbol={stockData.symbol} timeSeries={stockData.allSeries} />
     </div>
   );
 };
